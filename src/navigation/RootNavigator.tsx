@@ -8,7 +8,11 @@ const Stack = createStackNavigator<RootStackParamList>();
 const RootNavigatior = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="AuthStack" component={AuthNavigator} />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="AuthStack"
+        component={AuthNavigator}
+      />
     </Stack.Navigator>
   );
 };
