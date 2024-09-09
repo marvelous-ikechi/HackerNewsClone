@@ -1,10 +1,10 @@
 import React, {FunctionComponent} from 'react';
 import {Text, TextInput, TouchableOpacity, View} from 'react-native';
-import ScreenContainer from '../../components/ScreenContainer';
-import tw from '../../lib/tailwind';
-import SubmitBtn from '../../components/Button/SubmitBtn';
+import ScreenContainer from 'src/components/ScreenContainer';
+import tw from 'lib/tailwind';
+import SubmitBtn from 'src/components/Button/SubmitBtn';
 import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
-import {AuthStackParamList} from '../../types/navigationTypes';
+import {AuthStackParamList} from 'src/types/navigationTypes';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Signup'>;
 const Signup: FunctionComponent<Props> = ({navigation}) => {
