@@ -40,37 +40,53 @@ const useAuth = () => {
   };
 
   // Sign Up function
-  const signup = async (
+  const signup = (
     firstName: string,
     lastName: string,
     email: string,
     password: string,
-  ) => {
-    setIsLoading(true);
-    try {
-      const db = await openDatabase();
+  ): Promise<any> => {
+    return new Promise(async (resolve, reject) => {
+      setIsLoading(true);
+      try {
+        const db = await openDatabase();
 
-      // Insert user into database
-      await db.transaction(tx => {
-        tx.executeSql(
-          'INSERT INTO users (firstName, lastName, email, password) VALUES (?, ?, ?, ?)',
-          [firstName, lastName, email, password],
-          (_, result) => {
-            if (result.rowsAffected > 0) {
-              setUser({firstName, lastName, email});
-            }
-          },
-          _ => {
-            setError('Email already exists.');
-            return true; // Abort the transaction
-          },
-        );
-      });
-    } catch (_) {
-      setError('Error creating user');
-    } finally {
-      setIsLoading(false);
-    }
+        // Insert user into the database
+        await db.transaction(tx => {
+          tx.executeSql(
+            'INSERT INTO users (firstName, lastName, email, password) VALUES (?, ?, ?, ?)',
+            [firstName, lastName, email, password],
+            (_, result) => {
+              if (result.rowsAffected > 0) {
+                // User inserted successfully
+                resolve({
+                  success: true,
+                  user: {firstName, lastName, email},
+                });
+              } else {
+                // Insertion failed for some reason
+                resolve({
+                  success: false,
+                  error: 'Failed to create user.',
+                });
+              }
+            },
+            _ => {
+              // Handle a case where email already exists or any other error
+              resolve({
+                success: false,
+                error: 'Email already exists.',
+              });
+              return true; // Abort the transaction
+            },
+          );
+        });
+      } catch (_) {
+        reject(new Error('Error creating user'));
+      } finally {
+        setIsLoading(false);
+      }
+    });
   };
 
   // Login function
@@ -100,16 +116,16 @@ const useAuth = () => {
                   });
                 }
               },
-              (tx, error) => {
-                console.log('Error during login:', error);
+              (_, err) => {
+                console.log('Error during login:', err);
                 reject(new Error('Error logging in'));
                 return true; // Stops the transaction in case of error
               },
             );
           });
         });
-      } catch (error) {
-        reject(error);
+      } catch (err) {
+        reject(err);
       }
     });
   };
