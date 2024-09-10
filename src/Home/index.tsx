@@ -5,7 +5,7 @@ import ScreenContainer from 'src/components/ScreenContainer';
 const Home: FunctionComponent = () => {
   return (
     <ScreenContainer>
-      <></>
+      <View></View>
     </ScreenContainer>
   );
 };
