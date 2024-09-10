@@ -14,16 +14,16 @@ const Login: FunctionComponent<Props> = ({navigation}) => {
         <TextInput
           placeholderTextColor={'white'}
           placeholder="Email"
-          style={tw`border-[0.5px] px-3 rounded-md w-80 border-white`}
+          style={tw`border-[0.5px] font-poppinsRegular px-3 rounded-md w-80 border-white`}
         />
         <TextInput
           placeholderTextColor={'white'}
           placeholder="Password"
-          style={tw`border-[0.5px] px-3 mt-4 rounded-md w-80 border-white`}
+          style={tw`border-[0.5px] font-poppinsRegular px-3 mt-4 rounded-md w-80 border-white`}
         />
         <SubmitBtn title="Login" onPress={() => {}} />
         <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-          <Text style={tw`text-white text-right mt-4`}>
+          <Text style={tw`text-white font-poppinsRegular text-right mt-4`}>
             Don't have an account? Signup
           </Text>
         </TouchableOpacity>
