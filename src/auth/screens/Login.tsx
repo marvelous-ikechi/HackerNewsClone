@@ -11,12 +11,17 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {Controller, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 import ErrorText from 'src/components/Text/ErrorText';
+import {useDispatch, useSelector} from 'react-redux';
+import {setUser} from 'src/redux/slices';
+import {RootState} from 'src/redux/store';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Login'>;
 const Login: FunctionComponent<Props> = ({navigation}) => {
   const {login} = useAuth();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
 
   const signUpSchema = yup.object().shape({
     password: yup.string().required('Password is required'),
@@ -47,6 +52,7 @@ const Login: FunctionComponent<Props> = ({navigation}) => {
             routes: [{name: 'MainStack', params: {screen: 'Home'}}],
           }),
         );
+        dispatch(setUser(response.user));
       } else {
         setError(response.error);
       }

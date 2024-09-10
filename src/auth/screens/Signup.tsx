@@ -19,9 +19,11 @@ type Props = NativeStackScreenProps<AuthStackParamList, 'Signup'>;
 const Signup: FunctionComponent<Props> = ({navigation}) => {
   const {signup} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSignup = async (data: IFormInput) => {
     setIsLoading(true);
+    setError(null);
     try {
       const response = await signup(
         data.firstName,
@@ -29,12 +31,16 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
         data.email,
         data.password,
       );
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{name: 'MainStack', params: {screen: 'Home'}}],
-        }),
-      );
+      if (response.success) {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{name: 'MainStack', params: {screen: 'Home'}}],
+          }),
+        );
+      } else {
+        setError(response.error);
+      }
       console.log('response', response);
     } catch (err) {
       console.log(err);
@@ -69,6 +75,7 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
       <KeyboardAwareScrollView
         contentContainerStyle={tw`flex-1 w-full justify-center items-center`}>
         <View style={tw`flex-1 w-full justify-center items-center`}>
+          {error && <ErrorText text={error} />}
           <Controller
             control={control}
             name={'firstName'}
