@@ -5,8 +5,10 @@ import tw from 'lib/tailwind';
 import SubmitBtn from 'src/components/Button/SubmitBtn';
 import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import {AuthStackParamList} from 'src/types/navigationTypes';
+import {CommonActions} from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Signup'>;
+
 const Signup: FunctionComponent<Props> = ({navigation}) => {
   return (
     <ScreenContainer>
@@ -33,7 +35,17 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
           secureTextEntry={true}
           style={tw`border-[0.5px] px-3 mt-4  rounded-md w-80 border-white`}
         />
-        <SubmitBtn title="Signup" onPress={() => {}} />
+        <SubmitBtn
+          title="Signup"
+          onPress={() =>
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{name: 'MainStack', params: {screen: 'Home'}}],
+              }),
+            )
+          }
+        />
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={tw`text-white font-poppinsRegular text-right mt-4`}>
             Already have an account? Login
