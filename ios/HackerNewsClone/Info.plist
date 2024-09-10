@@ -26,14 +26,13 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -48,5 +47,42 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Futura-CondensedLight.otf</string>
+		<string>Futura XBlk BT.ttf</string>
+		<string>futura medium condensed bt.ttf</string>
+		<string>Futura-Bold.ttf</string>
+		<string>Futura-BoldItalic.ttf</string>
+		<string>Futura-Book.ttf</string>
+		<string>Futura-BookItalic.ttf</string>
+		<string>Futura-ExtraBlack.ttf</string>
+		<string>Futura-Heavy.ttf</string>
+		<string>Futura-HeavyItalic.ttf</string>
+		<string>Futura-Light.ttf</string>
+		<string>Futura-LightItalic.ttf</string>
+		<string>Futura-MediumItalic.ttf</string>
+		<string>Futura-Light bt.ttf</string>
+		<string>Futura-Medium.ttf</string>
+		<string>Futura.ttf</string>
+		<string>Poppins-Black.ttf</string>
+		<string>Poppins-BlackItalic.ttf</string>
+		<string>Poppins-Bold.ttf</string>
+		<string>Poppins-BoldItalic.ttf</string>
+		<string>Poppins-ExtraBold.ttf</string>
+		<string>Poppins-ExtraBoldItalic.ttf</string>
+		<string>Poppins-ExtraLight.ttf</string>
+		<string>Poppins-ExtraLightItalic.ttf</string>
+		<string>Poppins-Italic.ttf</string>
+		<string>Poppins-Light.ttf</string>
+		<string>Poppins-LightItalic.ttf</string>
+		<string>Poppins-Medium.ttf</string>
+		<string>Poppins-MediumItalic.ttf</string>
+		<string>Poppins-Regular.ttf</string>
+		<string>Poppins-SemiBold.ttf</string>
+		<string>Poppins-SemiBoldItalic.ttf</string>
+		<string>Poppins-Thin.ttf</string>
+		<string>Poppins-ThinItalic.ttf</string>
+	</array>
 </dict>
 </plist>

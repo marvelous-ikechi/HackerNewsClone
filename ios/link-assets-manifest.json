@@ -1,0 +1,141 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Futura XBlk BT.ttf",
+      "sha1": "5d20fef3473680f2c03937e0cd126a86c007c26f"
+    },
+    {
+      "path": "assets/fonts/Futura-Bold.ttf",
+      "sha1": "68fab471b5d366f87ade01b7f6c810d3a078a298"
+    },
+    {
+      "path": "assets/fonts/Futura-BoldItalic.ttf",
+      "sha1": "a35361959a4a0264e43d5656c8012feaf5f10070"
+    },
+    {
+      "path": "assets/fonts/Futura-Book.ttf",
+      "sha1": "1bcd70a20cff464c22ac4c9519fb9f72dd9be22a"
+    },
+    {
+      "path": "assets/fonts/Futura-BookItalic.ttf",
+      "sha1": "8475f2f936dd6005491ae75c968b3e28b28e40f5"
+    },
+    {
+      "path": "assets/fonts/Futura-CondensedLight.otf",
+      "sha1": "bfbb7d4d56453355314561345c0634b23e278b6a"
+    },
+    {
+      "path": "assets/fonts/Futura-ExtraBlack.ttf",
+      "sha1": "c410d6b004896b7aa8f2b745e58dc91083c36850"
+    },
+    {
+      "path": "assets/fonts/Futura-Heavy.ttf",
+      "sha1": "35bbb08ac0c52b83898323a948a8e71f88f2469c"
+    },
+    {
+      "path": "assets/fonts/Futura-HeavyItalic.ttf",
+      "sha1": "fd576f5456b547e0cd090cf9487ba25802093483"
+    },
+    {
+      "path": "assets/fonts/Futura-Light bt.ttf",
+      "sha1": "922d91d7c4f1ba42241a362bdafb59fe44baa85e"
+    },
+    {
+      "path": "assets/fonts/Futura-Light.ttf",
+      "sha1": "58fa3b9c7a828c600e15b1a86dd70f6ac8c76bfe"
+    },
+    {
+      "path": "assets/fonts/Futura-LightItalic.ttf",
+      "sha1": "cfe0613225fe55bff41e18d4cfeacd3118858388"
+    },
+    {
+      "path": "assets/fonts/Futura-Medium.ttf",
+      "sha1": "738e0588a2b321c45c7eeca39f87e78a263b1d82"
+    },
+    {
+      "path": "assets/fonts/Futura-MediumItalic.ttf",
+      "sha1": "da281ac7dd6351045c1b814c2bc8e12347e8db3d"
+    },
+    {
+      "path": "assets/fonts/Futura.ttf",
+      "sha1": "77aab0b78e5f9b3d89df070cfb763fb17606fa7e"
+    },
+    {
+      "path": "assets/fonts/Poppins-Black.ttf",
+      "sha1": "645e04c53c6b5b35bce654a811ebce16af8aa721"
+    },
+    {
+      "path": "assets/fonts/Poppins-BlackItalic.ttf",
+      "sha1": "be4ef2aac7775a4b0179c0ecfce6cea8f7783f63"
+    },
+    {
+      "path": "assets/fonts/Poppins-Bold.ttf",
+      "sha1": "875cf0cecd647bcf22e79d633d868c1b1ec98dfa"
+    },
+    {
+      "path": "assets/fonts/Poppins-BoldItalic.ttf",
+      "sha1": "6de8952ca08d27ee77f57347d2cef4b4e26aa78f"
+    },
+    {
+      "path": "assets/fonts/Poppins-ExtraBold.ttf",
+      "sha1": "4b5c0750f073abd576413a0898d3b95adaf199c8"
+    },
+    {
+      "path": "assets/fonts/Poppins-ExtraBoldItalic.ttf",
+      "sha1": "94d3ee3acdbd00e37a715a25f2b5237666b5b8a3"
+    },
+    {
+      "path": "assets/fonts/Poppins-ExtraLight.ttf",
+      "sha1": "85af6582a7e6155917c605f9d3fed68c02b23b06"
+    },
+    {
+      "path": "assets/fonts/Poppins-ExtraLightItalic.ttf",
+      "sha1": "6fa0418f91032680d2d8fe4843009f2c80faa61d"
+    },
+    {
+      "path": "assets/fonts/Poppins-Italic.ttf",
+      "sha1": "e2bfcd56016c3c915221ef1c5fc1a17b0776eb91"
+    },
+    {
+      "path": "assets/fonts/Poppins-Light.ttf",
+      "sha1": "e247a92158e112f8bf7b638c8d95381d66b00dbb"
+    },
+    {
+      "path": "assets/fonts/Poppins-LightItalic.ttf",
+      "sha1": "f76102b361e705751a83b7b22fe954daf1f27dd4"
+    },
+    {
+      "path": "assets/fonts/Poppins-Medium.ttf",
+      "sha1": "283f21b44efbdbf276ba802be2d949a36bbc4233"
+    },
+    {
+      "path": "assets/fonts/Poppins-MediumItalic.ttf",
+      "sha1": "b592c62fdf88c40cfd0f031bba6423b1d4430472"
+    },
+    {
+      "path": "assets/fonts/Poppins-Regular.ttf",
+      "sha1": "fdd3002e7d814ee47c1c1b8487c72c6bbb3a2d00"
+    },
+    {
+      "path": "assets/fonts/Poppins-SemiBold.ttf",
+      "sha1": "8a4ace9392d06bcb7f8ea2f5169b07e4c383a90d"
+    },
+    {
+      "path": "assets/fonts/Poppins-SemiBoldItalic.ttf",
+      "sha1": "0c8bed0a5942b2388d36b11c115685d9f01700b0"
+    },
+    {
+      "path": "assets/fonts/Poppins-Thin.ttf",
+      "sha1": "09ba4dcd5509c8085bf88c665dcc51cbdfced27b"
+    },
+    {
+      "path": "assets/fonts/Poppins-ThinItalic.ttf",
+      "sha1": "fb8fccca21550e71135f92bbaf8a2e8a12c90465"
+    },
+    {
+      "path": "assets/fonts/futura medium condensed bt.ttf",
+      "sha1": "d4413ab5a6cb6d8f2c98242845e54f1dce6ad4cb"
+    }
+  ]
+}
