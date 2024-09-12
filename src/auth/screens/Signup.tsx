@@ -154,11 +154,13 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
               </>
             )}
           />
-          <SubmitBtn
-            title="Sign up"
-            isLoading={isLoading}
-            onPress={handleSubmit(handleSignup)}
-          />
+          <View style={tw`mt-4 w-80`}>
+            <SubmitBtn
+              title="Sign up"
+              isLoading={isLoading}
+              onPress={handleSubmit(handleSignup)}
+            />
+          </View>
           <TouchableOpacity onPress={() => navigation.navigate('Login')}>
             <Text style={tw`text-white font-poppinsRegular text-right mt-4`}>
               Already have an account? Login

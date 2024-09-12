@@ -11,9 +11,8 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {Controller, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 import ErrorText from 'src/components/Text/ErrorText';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {setUser} from 'src/redux/slices';
-import {RootState} from 'src/redux/store';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Login'>;
 const Login: FunctionComponent<Props> = ({navigation}) => {
@@ -21,7 +20,6 @@ const Login: FunctionComponent<Props> = ({navigation}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.user);
 
   const signUpSchema = yup.object().shape({
     password: yup.string().required('Password is required'),
@@ -65,7 +63,7 @@ const Login: FunctionComponent<Props> = ({navigation}) => {
 
   return (
     <ScreenContainer>
-      <View style={tw`flex-1 w-full justify-center items-center`}>
+      <View style={tw`flex-1 justify-center items-center`}>
         {error && <ErrorText text={error} />}
         <Controller
           control={control}
@@ -105,11 +103,13 @@ const Login: FunctionComponent<Props> = ({navigation}) => {
             </>
           )}
         />
-        <SubmitBtn
-          title="Login"
-          isLoading={isLoading}
-          onPress={handleSubmit(handleLogin)}
-        />
+        <View style={tw`mt-4 w-80`}>
+          <SubmitBtn
+            title="Login"
+            isLoading={isLoading}
+            onPress={handleSubmit(handleLogin)}
+          />
+        </View>
         <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
           <Text style={tw`text-white font-poppinsRegular text-right mt-4`}>
             Don't have an account? Signup
