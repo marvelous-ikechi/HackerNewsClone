@@ -4,29 +4,16 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import {
-  FlatList,
-  Text,
-  TouchableOpacity,
-  View,
-  ActivityIndicator,
-} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
+import {ActivityIndicator, MD2Colors} from 'react-native-paper';
 import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import ScreenContainer from 'src/components/ScreenContainer';
-import tw from 'src/lib/tailwind';
 import {BottomTabStackParamList} from 'src/types/navigationTypes';
-import {truncaText} from 'src/utils/truncatext';
-
-interface NewsData {
-  by: string;
-  title: string;
-  url: string;
-  id: number;
-  type: string;
-}
+import {NewsData} from 'src/types/homeTypes';
+import NewsRenderItem from './components/RenderItem';
 
 type Props = NativeStackScreenProps<BottomTabStackParamList, 'Home'>;
-const Home: FunctionComponent<Props> = ({navigation}) => {
+const Home: FunctionComponent<Props> = () => {
   const [newsData, setNewsData] = useState<NewsData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -91,8 +78,12 @@ const Home: FunctionComponent<Props> = ({navigation}) => {
 
   const listFooterComponent = () => {
     return isLoadingMore ? (
-      <ActivityIndicator size="small" color="orange" />
+      <ActivityIndicator size="small" color={MD2Colors.orange500} />
     ) : null;
+  };
+
+  const renderItem = ({item}: {item: NewsData}) => {
+    return <NewsRenderItem item={item} />;
   };
 
   // Fetch the next batch of stories when `storyIds` changes
@@ -116,31 +107,7 @@ const Home: FunctionComponent<Props> = ({navigation}) => {
           <FlatList
             data={newsData}
             keyExtractor={item => item.id.toString()}
-            renderItem={({item}) => (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('MainStack', {
-                    screen: 'NewsDetails',
-                    params: {
-                      url: item.url,
-                    },
-                  })
-                }
-                style={tw`h-15`}
-                key={item.id}>
-                <Text style={tw`font-poppinsRegular text-orange text-xs`}>
-                  {truncaText(item.title)}
-                </Text>
-                <View style={tw`flex-row items-center`}>
-                  <Text style={tw`font-poppinsMedium text-white text-xs`}>
-                    <Text style={tw`text-gray-400`}>Author: </Text> {item.by}
-                  </Text>
-                  <Text style={tw`font-poppinsMedium ml-5 text-white text-xs`}>
-                    <Text style={tw`text-gray-400`}>Type: </Text> {item.type}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            )}
+            renderItem={renderItem}
             onEndReached={loadMoreNews} // Trigger loading more when scrolling to the bottom
             onEndReachedThreshold={0.5} // Load more when 50% from the bottom
             ListFooterComponent={listFooterComponent} // Show a loading spinner when more stories are being loaded
