@@ -16,11 +16,12 @@ type User = {
   firstName: string;
   lastName: string;
   email: string;
+  bio: string;
 };
 
 const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, _setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Create users table if it doesn't exist
@@ -33,8 +34,16 @@ const useAuth = () => {
           firstName TEXT,
           lastName TEXT,
           email TEXT UNIQUE,
-          password TEXT
+          password TEXT,
+          bio TEXT DEFAULT ''
         )`,
+        [],
+        () => {
+          console.log('Users table created successfully');
+        },
+        (_, error) => {
+          console.log('Error creating users table:', error);
+        },
       );
     });
   };
@@ -54,30 +63,34 @@ const useAuth = () => {
         // Insert user into the database
         await db.transaction(tx => {
           tx.executeSql(
-            'INSERT INTO users (firstName, lastName, email, password) VALUES (?, ?, ?, ?)',
-            [firstName, lastName, email, password],
+            'INSERT INTO users (firstName, lastName, email, password, bio) VALUES (?, ?, ?, ?, ?)',
+            [firstName, lastName, email, password, ''], // Default empty bio
             (_, result) => {
               if (result.rowsAffected > 0) {
-                // User inserted successfully
                 resolve({
                   success: true,
-                  user: {firstName, lastName, email},
+                  user: {firstName, lastName, email, bio: ''},
                 });
               } else {
-                // Insertion failed for some reason
                 resolve({
                   success: false,
                   error: 'Failed to create user.',
                 });
               }
             },
-            _ => {
-              // Handle a case where email already exists or any other error
-              resolve({
-                success: false,
-                error: 'Email already exists.',
-              });
-              return true; // Abort the transaction
+            (err: any) => {
+              console.log('Error creating user:', err);
+              if (err.message.includes('UNIQUE constraint failed')) {
+                resolve({
+                  success: false,
+                  error: 'Email already exists.',
+                });
+              } else {
+                resolve({
+                  success: false,
+                  error: 'An error occured', // General SQL error message
+                });
+              }
             },
           );
         });
@@ -107,6 +120,7 @@ const useAuth = () => {
                       firstName: userData.firstName,
                       lastName: userData.lastName,
                       email: userData.email,
+                      bio: userData.bio,
                     },
                   });
                 } else {
@@ -130,12 +144,66 @@ const useAuth = () => {
     });
   };
 
-  // Logout function
+  // Update user function
+  const updateUser = (
+    email: string,
+    firstName: string,
+    lastName: string,
+    bio: string,
+  ): Promise<any> => {
+    return new Promise(async (resolve, reject) => {
+      setIsLoading(true);
+      try {
+        const db = await openDatabase();
+
+        console.log('Updating user with:', {email, firstName, lastName, bio});
+
+        await db.transaction(tx => {
+          tx.executeSql(
+            'UPDATE users SET firstName = ?, lastName = ?, bio = ? WHERE email = ?',
+            [firstName, lastName, bio, email],
+            (_, result) => {
+              if (result.rowsAffected > 0) {
+                console.log('User updated successfully');
+
+                setUser({firstName, lastName, email, bio});
+
+                resolve({
+                  success: true,
+                  user: {firstName, lastName, email, bio},
+                });
+              } else {
+                console.log('No rows affected');
+                resolve({
+                  success: false,
+                  error: 'Failed to update user.',
+                });
+              }
+            },
+            (_, err) => {
+              console.error('SQL Error:', err);
+              resolve({
+                success: false,
+                error: `SQL Error: ${err.message}`,
+              });
+              return true;
+            },
+          );
+        });
+      } catch (err) {
+        console.error('Transaction Error:', err);
+        reject(new Error('Error updating user'));
+      } finally {
+        setIsLoading(false);
+      }
+    });
+  };
+
   const logout = () => {
     setUser(null);
   };
 
-  // Load initial database and set user if needed
+  // Initialize database
   useEffect(() => {
     const init = async () => {
       await initDb();
@@ -151,6 +219,7 @@ const useAuth = () => {
     signup,
     login,
     logout,
+    updateUser,
   };
 };
 
