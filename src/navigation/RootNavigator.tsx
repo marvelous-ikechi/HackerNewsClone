@@ -6,6 +6,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 import {useSelector} from 'react-redux';
 import {RootState} from 'src/redux/store';
 import Splashscreen from 'src/components/Splashscreen';
+import MainStackNavigator from './MainStackNavigator';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -17,7 +18,7 @@ const RootNavigatior = () => {
 
   useEffect(() => {
     if (user.email) {
-      setInitialRoute('MainStack');
+      setInitialRoute('BottomTabStack');
     } else {
       setInitialRoute('AuthStack');
     }
@@ -36,8 +37,13 @@ const RootNavigatior = () => {
       />
       <Stack.Screen
         options={{headerShown: false}}
-        name="MainStack"
+        name="BottomTabStack"
         component={BottomTabNavigator}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="MainStack"
+        component={MainStackNavigator}
       />
     </Stack.Navigator>
   );
