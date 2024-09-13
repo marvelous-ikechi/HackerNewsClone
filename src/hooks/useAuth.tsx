@@ -21,7 +21,6 @@ type User = {
 
 const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [error, _setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Create users table if it doesn't exist
@@ -38,11 +37,9 @@ const useAuth = () => {
           bio TEXT DEFAULT ''
         )`,
         [],
-        () => {
-          console.log('Users table created successfully');
-        },
-        (_, error) => {
-          console.log('Error creating users table:', error);
+        () => {},
+        (_, err) => {
+          console.log('Error creating users table:', err);
         },
       );
     });
@@ -215,7 +212,6 @@ const useAuth = () => {
   return {
     user,
     isLoading,
-    error,
     signup,
     login,
     logout,
