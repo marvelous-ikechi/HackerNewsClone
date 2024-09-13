@@ -4,8 +4,9 @@ import Home from 'src/Home';
 import Profile from 'src/Profile';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import tw from 'src/lib/tailwind';
+import {BottomTabStackParamList} from 'src/types/navigationTypes';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<BottomTabStackParamList>();
 
 export default function BottomTabNavigator() {
   const handleIconDisplay = useCallback((routeName: string, color: string) => {
