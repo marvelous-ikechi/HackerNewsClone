@@ -13,6 +13,8 @@ import {Controller, useForm} from 'react-hook-form';
 import {IFormInput} from 'src/types/auth';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ErrorText from 'src/components/Text/ErrorText';
+import {useDispatch} from 'react-redux';
+import {setUser} from 'src/redux/slices';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Signup'>;
 
@@ -20,6 +22,7 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
   const {signup} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch();
 
   const handleSignup = async (data: IFormInput) => {
     setIsLoading(true);
@@ -32,6 +35,8 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
         data.password,
       );
       if (response.success) {
+        console.log(response);
+        dispatch(setUser(response.user));
         navigation.dispatch(
           CommonActions.reset({
             index: 0,

@@ -44,13 +44,13 @@ const Login: FunctionComponent<Props> = ({navigation}) => {
     try {
       const response = await login(data.email, data.password);
       if (response.success) {
+        dispatch(setUser(response.user));
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
             routes: [{name: 'BottomTabStack', params: {screen: 'Home'}}],
           }),
         );
-        dispatch(setUser(response.user));
       } else {
         setError(response.error);
       }
