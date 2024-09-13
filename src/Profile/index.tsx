@@ -24,7 +24,6 @@ const Profile: FunctionComponent<Props> = ({navigation}) => {
   console.log('user', user);
 
   const handleBioUpdate = async () => {
-    console.log('bio', {...user, bio});
     setIsSubmitting(true);
     await updateUser(user.email, user.firstName, user.lastName, bio)
       .then(response => {
