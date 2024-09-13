@@ -64,6 +64,7 @@ const Login: FunctionComponent<Props> = ({navigation}) => {
   return (
     <ScreenContainer>
       <View style={tw`flex-1 justify-center items-center`}>
+        <Text style={tw`text-white font-poppinsBold mb-8 text-2xl`}>Login</Text>
         {error && <ErrorText text={error} />}
         <Controller
           control={control}

@@ -1,5 +1,11 @@
 import React, {FunctionComponent, useState} from 'react';
-import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import ScreenContainer from 'src/components/ScreenContainer';
 import tw from 'lib/tailwind';
 import SubmitBtn from 'src/components/Button/SubmitBtn';
@@ -79,7 +85,11 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
     <ScreenContainer>
       <KeyboardAwareScrollView
         contentContainerStyle={tw`flex-1 w-full justify-center items-center`}>
-        <View style={tw`flex-1 w-full justify-center items-center`}>
+        <ScrollView
+          contentContainerStyle={tw`flex-1 w-full justify-center items-center`}>
+          <Text style={tw`text-white font-poppinsBold mb-8 text-2xl`}>
+            Sign Up
+          </Text>
           {error && <ErrorText text={error} />}
           <Controller
             control={control}
@@ -171,7 +181,7 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
               Already have an account? Login
             </Text>
           </TouchableOpacity>
-        </View>
+        </ScrollView>
       </KeyboardAwareScrollView>
     </ScreenContainer>
   );
