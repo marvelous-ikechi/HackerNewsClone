@@ -35,7 +35,7 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{name: 'MainStack', params: {screen: 'Home'}}],
+            routes: [{name: 'BottomTabStack', params: {screen: 'Home'}}],
           }),
         );
       } else {

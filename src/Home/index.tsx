@@ -11,8 +11,10 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
+import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import ScreenContainer from 'src/components/ScreenContainer';
 import tw from 'src/lib/tailwind';
+import {BottomTabStackParamList} from 'src/types/navigationTypes';
 import {truncaText} from 'src/utils/truncatext';
 
 interface NewsData {
@@ -23,7 +25,8 @@ interface NewsData {
   type: string;
 }
 
-const Home: FunctionComponent = () => {
+type Props = NativeStackScreenProps<BottomTabStackParamList, 'Home'>;
+const Home: FunctionComponent<Props> = ({navigation}) => {
   const [newsData, setNewsData] = useState<NewsData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -114,7 +117,17 @@ const Home: FunctionComponent = () => {
             data={newsData}
             keyExtractor={item => item.id.toString()}
             renderItem={({item}) => (
-              <TouchableOpacity style={tw`h-15`} key={item.id}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('MainStack', {
+                    screen: 'NewsDetails',
+                    params: {
+                      url: item.url,
+                    },
+                  })
+                }
+                style={tw`h-15`}
+                key={item.id}>
                 <Text style={tw`font-poppinsRegular text-orange text-xs`}>
                   {truncaText(item.title)}
                 </Text>
