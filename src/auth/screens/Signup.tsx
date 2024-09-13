@@ -1,5 +1,11 @@
 import React, {FunctionComponent, useState} from 'react';
-import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import ScreenContainer from 'src/components/ScreenContainer';
 import tw from 'lib/tailwind';
 import SubmitBtn from 'src/components/Button/SubmitBtn';
@@ -13,15 +19,22 @@ import {Controller, useForm} from 'react-hook-form';
 import {IFormInput} from 'src/types/auth';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ErrorText from 'src/components/Text/ErrorText';
+import {useDispatch} from 'react-redux';
+import {setUser} from 'src/redux/slices';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Signup'>;
 
 const Signup: FunctionComponent<Props> = ({navigation}) => {
   const {signup} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const handleSignup = async (data: IFormInput) => {
     setIsLoading(true);
+    setError(null);
     try {
       const response = await signup(
         data.firstName,
@@ -29,12 +42,18 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
         data.email,
         data.password,
       );
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{name: 'MainStack', params: {screen: 'Home'}}],
-        }),
-      );
+      if (response.success) {
+        console.log(response);
+        dispatch(setUser(response.user));
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{name: 'BottomTabStack', params: {screen: 'Home'}}],
+          }),
+        );
+      } else {
+        setError(response.error);
+      }
       console.log('response', response);
     } catch (err) {
       console.log(err);
@@ -68,7 +87,12 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
     <ScreenContainer>
       <KeyboardAwareScrollView
         contentContainerStyle={tw`flex-1 w-full justify-center items-center`}>
-        <View style={tw`flex-1 w-full justify-center items-center`}>
+        <ScrollView
+          contentContainerStyle={tw`flex-1 w-full justify-center items-center`}>
+          <Text style={tw`text-white font-poppinsBold mb-8 text-2xl`}>
+            Sign Up
+          </Text>
+          {error && <ErrorText text={error} />}
           <Controller
             control={control}
             name={'firstName'}
@@ -132,32 +156,46 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
             name={'password'}
             render={({field: {value, onChange, onBlur}}) => (
               <>
-                <TextInput
-                  placeholderTextColor={'white'}
-                  placeholder="Password"
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  secureTextEntry={true}
-                  style={tw`border-[0.5px] px-3 mt-4 text-white rounded-md w-80 border-white`}
-                />
+                <View
+                  style={tw`border-[0.5px] flex-row mt-4 rounded-md  border-white`}>
+                  <TextInput
+                    placeholderTextColor={'white'}
+                    placeholder="Password"
+                    value={value}
+                    secureTextEntry={showPassword}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    style={tw` text-white font-poppinsRegular px-3  w-80 `}
+                  />
+                  <TouchableOpacity
+                    onPress={() => setShowPassword(!showPassword)}>
+                    <MaterialCommunityIcons
+                      name={showPassword ? 'eye-off' : 'eye-outline'}
+                      size={20}
+                      color="white"
+                      style={tw`absolute right-3 top-3`}
+                    />
+                  </TouchableOpacity>
+                </View>
                 {errors?.password?.message && (
                   <ErrorText text={errors.password?.message} />
                 )}
               </>
             )}
           />
-          <SubmitBtn
-            title="Sign up"
-            isLoading={isLoading}
-            onPress={handleSubmit(handleSignup)}
-          />
+          <View style={tw`mt-4 w-80`}>
+            <SubmitBtn
+              title="Sign up"
+              isLoading={isLoading}
+              onPress={handleSubmit(handleSignup)}
+            />
+          </View>
           <TouchableOpacity onPress={() => navigation.navigate('Login')}>
             <Text style={tw`text-white font-poppinsRegular text-right mt-4`}>
               Already have an account? Login
             </Text>
           </TouchableOpacity>
-        </View>
+        </ScrollView>
       </KeyboardAwareScrollView>
     </ScreenContainer>
   );

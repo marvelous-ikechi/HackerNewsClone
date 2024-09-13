@@ -6,12 +6,21 @@ interface Props {
   title: string;
   onPress: () => void;
   isLoading?: boolean;
+  disabled?: boolean;
 }
 
-const SubmitBtn: FunctionComponent<Props> = ({title, onPress, isLoading}) => {
+const SubmitBtn: FunctionComponent<Props> = ({
+  title,
+  onPress,
+  isLoading,
+  disabled,
+}) => {
   return (
     <TouchableOpacity
-      style={tw`bg-orange mt-4 h-12 items-center w-80 rounded-md justify-center`}
+      disabled={disabled}
+      style={tw`bg-${
+        disabled ? 'gray-500' : 'orange'
+      } mt-4 h-12 items-center w-full rounded-md justify-center`}
       onPress={onPress}>
       {isLoading ? (
         <ActivityIndicator size="small" color="white" />

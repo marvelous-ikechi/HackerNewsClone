@@ -11,12 +11,17 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {Controller, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 import ErrorText from 'src/components/Text/ErrorText';
+import {useDispatch} from 'react-redux';
+import {setUser} from 'src/redux/slices';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Login'>;
 const Login: FunctionComponent<Props> = ({navigation}) => {
   const {login} = useAuth();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const signUpSchema = yup.object().shape({
     password: yup.string().required('Password is required'),
@@ -41,10 +46,11 @@ const Login: FunctionComponent<Props> = ({navigation}) => {
     try {
       const response = await login(data.email, data.password);
       if (response.success) {
+        dispatch(setUser(response.user));
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{name: 'MainStack', params: {screen: 'Home'}}],
+            routes: [{name: 'BottomTabStack', params: {screen: 'Home'}}],
           }),
         );
       } else {
@@ -59,7 +65,8 @@ const Login: FunctionComponent<Props> = ({navigation}) => {
 
   return (
     <ScreenContainer>
-      <View style={tw`flex-1 w-full justify-center items-center`}>
+      <View style={tw`flex-1 justify-center items-center`}>
+        <Text style={tw`text-white font-poppinsBold mb-8 text-2xl`}>Login</Text>
         {error && <ErrorText text={error} />}
         <Controller
           control={control}
@@ -85,25 +92,40 @@ const Login: FunctionComponent<Props> = ({navigation}) => {
           name={'password'}
           render={({field: {value, onChange, onBlur}}) => (
             <>
-              <TextInput
-                placeholderTextColor={'white'}
-                placeholder="Password"
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                style={tw`border-[0.5px] text-white font-poppinsRegular px-3 mt-4 rounded-md w-80 border-white`}
-              />
+              <View
+                style={tw`border-[0.5px] flex-row mt-4 rounded-md  border-white`}>
+                <TextInput
+                  placeholderTextColor={'white'}
+                  placeholder="Password"
+                  value={value}
+                  secureTextEntry={showPassword}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  style={tw` text-white font-poppinsRegular px-3  w-80 `}
+                />
+                <TouchableOpacity
+                  onPress={() => setShowPassword(!showPassword)}>
+                  <MaterialCommunityIcons
+                    name={showPassword ? 'eye-off' : 'eye-outline'}
+                    size={20}
+                    color="white"
+                    style={tw`absolute right-3 top-3`}
+                  />
+                </TouchableOpacity>
+              </View>
               {errors?.password?.message && (
                 <ErrorText text={errors.password.message} />
               )}
             </>
           )}
         />
-        <SubmitBtn
-          title="Login"
-          isLoading={isLoading}
-          onPress={handleSubmit(handleLogin)}
-        />
+        <View style={tw`mt-4 w-80`}>
+          <SubmitBtn
+            title="Login"
+            isLoading={isLoading}
+            onPress={handleSubmit(handleLogin)}
+          />
+        </View>
         <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
           <Text style={tw`text-white font-poppinsRegular text-right mt-4`}>
             Don't have an account? Signup
