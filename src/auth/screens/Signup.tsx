@@ -21,6 +21,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ErrorText from 'src/components/Text/ErrorText';
 import {useDispatch} from 'react-redux';
 import {setUser} from 'src/redux/slices';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Signup'>;
 
@@ -28,6 +29,7 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
   const {signup} = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const handleSignup = async (data: IFormInput) => {
@@ -154,15 +156,27 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
             name={'password'}
             render={({field: {value, onChange, onBlur}}) => (
               <>
-                <TextInput
-                  placeholderTextColor={'white'}
-                  placeholder="Password"
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  secureTextEntry={true}
-                  style={tw`border-[0.5px] px-3 mt-4 text-white rounded-md w-80 border-white`}
-                />
+                <View
+                  style={tw`border-[0.5px] flex-row mt-4 rounded-md  border-white`}>
+                  <TextInput
+                    placeholderTextColor={'white'}
+                    placeholder="Password"
+                    value={value}
+                    secureTextEntry={showPassword}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    style={tw` text-white font-poppinsRegular px-3  w-80 `}
+                  />
+                  <TouchableOpacity
+                    onPress={() => setShowPassword(!showPassword)}>
+                    <MaterialCommunityIcons
+                      name={showPassword ? 'eye-off' : 'eye-outline'}
+                      size={20}
+                      color="white"
+                      style={tw`absolute right-3 top-3`}
+                    />
+                  </TouchableOpacity>
+                </View>
                 {errors?.password?.message && (
                   <ErrorText text={errors.password?.message} />
                 )}
